@@ -1,0 +1,20 @@
+.login-form-login-btn {
+  background-color: deepskyblue;
+  padding: 10px;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.login-container {
+  width: 80%;
+  justify-content: center;
+  margin: 0 auto;
+  border: 2px solid white;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 50px;
+}

@@ -10,7 +10,7 @@ async function add_quote(quote) {
 }
 
 async function get_all_quotes() {
-  //   return await NewUser.find().exec();
+  return await QuoteModel.find().exec();
 }
 module.exports = {
   QuoteModel,

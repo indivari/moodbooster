@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const quoteSchema = new Schema({
-  name: String,
-  email: String,
-  password: String,
+  content: String,
+  date: Date,
+  noOfUpVotes: Number,
+  noOfDownVotes: Number,
 });
 
 const Quote = mongoose.model("quotes", quoteSchema);

@@ -3,7 +3,7 @@ import React from "react";
 export const CategoriesPanel = () => {
   return (
     <div className="categories-panel-div">
-      <h1>categories</h1>
+      <h2>categories</h2>
     </div>
   );
 };

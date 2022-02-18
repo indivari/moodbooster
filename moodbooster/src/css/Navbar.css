@@ -2,16 +2,27 @@
   float: right;
 }
 
-span button {
-  font-size: 20px;
+/* span button {
+ 
+  margin: 5px;
+} */
+
+.navbar-login-btn,
+.navbar-logout-btn {
+  background-color: hotpink;
+  font-size: 15px;
   border: none;
-  padding: 10px;
+  padding: 5px;
+  color: white;
+  font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
+  background-color: hotpink;
 }
 
-.login-btn {
-  margin-right: 20px;
+.navbar-login-btn {
+  margin-right: 5px;
+  padding: 5px 15px;
 }
 
 #plus-icon {
