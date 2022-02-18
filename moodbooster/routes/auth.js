@@ -11,14 +11,6 @@ router.get("/login", function (req, res, next) {
 router.get("/facebook", passport.authenticate("facebook"));
 
 // We catch the authentication feedback, and decode token, save.
-// router.get(
-//   "/facebook/callback",
-//   passport.authenticate("facebook", { failureRedirect: "/login" }),
-//   function (req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect("/");
-//   }
-// );
 
 router.get(
   "/facebook/callback",
@@ -35,4 +27,20 @@ router.get("/profile", (req, res) => {
 router.get("/failed", (req, res) => {
   res.send("user is invalid");
 });
+
+router.get("/logout", (req, res) => {
+  req.logOut();
+  res.redirect("http://localhost:8080");
+});
+
+router.get("/github", passport.authenticate("github"));
+
+router.get(
+  "/github/callback",
+  passport.authenticate("github", {
+    successRedirect: "/",
+    failureRedirect: "/auth/failed",
+  })
+);
+
 module.exports = router;

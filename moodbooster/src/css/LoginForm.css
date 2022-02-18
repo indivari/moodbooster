@@ -1,4 +1,4 @@
-.login-form-login-btn {
+.login-form-facebook-btn {
   background-color: deepskyblue;
   padding: 10px;
   border: none;
@@ -8,13 +8,27 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
+.login-form-github-btn {
+  background-color: rgb(3, 3, 3);
+  padding: 10px;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .login-container {
   width: 80%;
   justify-content: center;
+  display: block;
   margin: 0 auto;
   border: 2px solid white;
   border-radius: 10px;
   text-align: center;
   margin-top: 50px;
+}
+.login-container a {
+  display: block;
+  text-decoration: none;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/Navbar.css";
 import { IoIosAdd } from "react-icons/io";
-import axios from "axios";
+
 import { useState } from "react";
 
 export const Navbar = ({ onLogin }) => {
@@ -11,10 +11,12 @@ export const Navbar = ({ onLogin }) => {
     onLogin(!isLoginClicked);
   };
 
+  const handleLogout = () => {
+    window.open("http://localhost:8080/auth/logout", "_self");
+  };
   //   const handleLoginClick = () => {
-  //     axios.get("./auth/facebook").then((res) => {
-  //       console.log(res);
-  //     });
+
+  //
   //   };
 
   return (
@@ -28,7 +30,9 @@ export const Navbar = ({ onLogin }) => {
           </button>
         </span>
         <span>
-          <button className="navbar-logout-btn">Logout</button>
+          <button onClick={handleLogout} className="navbar-logout-btn">
+            Logout
+          </button>
         </span>
       </span>
     </div>

@@ -27,3 +27,9 @@ body {
   flex: 1;
   text-align: center;
 }
+
+#profile-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
