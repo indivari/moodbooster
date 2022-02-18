@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { quoteSchema } = require("../db/quote.schema");
 
-const QuoteModel = mongoose.model("users", quoteSchema);
+const QuoteModel = mongoose.model("quotes", quoteSchema);
 
 async function add_quote(quote) {
   //   const document = new NewUser(user);

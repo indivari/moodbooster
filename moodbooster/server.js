@@ -4,9 +4,9 @@ const path = require("path");
 const PORT = 8080;
 const mongo = new MongoDB();
 
-// const indexRouter = require("./routes/index");
-// const usersRouter = require("./routes/users");
-// const quotesRouter = require("./routes/quotes");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const quotesRouter = require("./routes/quotes");
 
 const app = express();
 
@@ -21,9 +21,9 @@ app.listen(PORT, () => {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use("/", indexRouter);
-// app.use("/users", usersRouter);
-// app.use("/quotes", quotesRouter);
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/quotes", quotesRouter);
 
 module.exports = {
   app,

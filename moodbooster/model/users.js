@@ -5,12 +5,11 @@ const { userSchema } = require("../db/user.schema");
 const UserModel = mongoose.model("users", userSchema);
 
 async function get_one_user({ userEmail, userPassword }) {
-  const result = await UserModel.findOne({
-    email: userEmail,
-    password: userPassword,
-  }).exec();
-
-  return { success: !!result, user: result };
+  //   const result = await UserModel.findOne({
+  //     email: userEmail,
+  //     password: userPassword,
+  //   }).exec();
+  //   return { success: !!result, user: result };
 }
 
 async function add_user(user) {
