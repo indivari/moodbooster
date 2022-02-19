@@ -1,6 +1,31 @@
 #quote-input {
   width: 95%;
+  border: none;
+  resize: none;
+  height: 100px;
+  width: 450px;
+}
+.quote-wrapper {
   border: 2px solid mistyrose;
   border-radius: 10px;
   margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.boost-btn {
+  font-size: 15px;
+  border: none;
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: hotpink;
+  margin-bottom: 5px;
+  /* float: right; */
+}
+
+.boost-btn:hover {
+  background-color: deeppink;
 }

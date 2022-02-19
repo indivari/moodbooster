@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const quoteSchema = new Schema({
   content: String,
-  date: Date,
+  userId: String,
+  publishedDate: Date,
   noOfUpVotes: Number,
   noOfDownVotes: Number,
 });

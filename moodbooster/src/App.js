@@ -7,21 +7,34 @@ import { FeaturePanel } from "./components/FeaturePanel";
 import { useEffect, useState } from "react";
 import { LoginForm } from "./components/LoginForm";
 import axios from "axios";
+import { UserContext } from "./UserContext";
 
 function App() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [user, setUser] = useState();
   const [profilePhoto, setProfilePhoto] = useState("");
 
+  const [quotesList, setQuotesList] = useState("");
+
+  const [userId, setUserId] = useState("");
+
   useEffect(() => {
     const getUser = async () => {
       axios
-        .get("http://localhost:8080/auth/profile")
+        .get("http://localhost:8080/auth/profile", {
+          withCredentials: true,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        })
         .then((res) => {
           console.log(res.data);
           if (res.status === 200) {
-            setUser(res.data.user.displayName);
-            setProfilePhoto(res.data.user.photos[0].value);
+            setUser(res.data.user.name);
+            setUserId(res.data.user.userId);
+            setProfilePhoto(res.data.user.profilePhoto);
           } else {
             throw new Error("Authentication has been failed");
           }
@@ -33,13 +46,12 @@ function App() {
     getUser();
   }, []);
 
-  // const fetchProfile = () => {
-  //   axios.get("http://localhost:8080/auth/profile").then((res) => {
-  //     console.log(res.data);
-  //     setUser(res.data.user.displayName);
-  //     setProfilePhoto(res.data.user.photos[0].value);
-  //   });
-  // };
+  useEffect(() => {
+    console.log("loaded");
+    axios.get("http://localhost:8080/quotes/list").then((res) => {
+      console.log("quotes response" + res);
+    });
+  }, []);
 
   const handleLoginAction = (loginStatus) => {
     setIsLoginClicked(loginStatus);
@@ -47,21 +59,23 @@ function App() {
 
   return (
     <div className="App">
-      {isLoginClicked ? (
-        <LoginForm />
-      ) : (
-        <>
-          <Navbar onLogin={handleLoginAction} />
-          {/* <button onClick={fetchProfile}>Print profile</button> */}
-          {user}
-          <img id="profile-img" src={profilePhoto} alt="" />
-          <div className="container-wrapper">
-            <CategoriesPanel />
-            <QuotesPanel />
-            <FeaturePanel />
-          </div>
-        </>
-      )}
+      <UserContext.Provider value={{ userId }}>
+        {isLoginClicked ? (
+          <LoginForm />
+        ) : (
+          <>
+            <Navbar onLogin={handleLoginAction} />
+            <img id="profile-img" src={profilePhoto} alt="" />
+            <span>{user}</span>
+
+            <div className="container-wrapper">
+              <CategoriesPanel />
+              <QuotesPanel />
+              <FeaturePanel />
+            </div>
+          </>
+        )}
+      </UserContext.Provider>
     </div>
   );
 }

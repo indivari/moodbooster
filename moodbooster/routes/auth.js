@@ -15,7 +15,7 @@ router.get("/facebook", passport.authenticate("facebook"));
 router.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
-    successRedirect: "/",
+    successRedirect: "http://localhost:3000",
     failureRedirect: "/auth/failed",
   })
 );
@@ -30,7 +30,7 @@ router.get("/failed", (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.logOut();
-  res.redirect("http://localhost:8080");
+  res.redirect("http://localhost:3000");
 });
 
 router.get("/github", passport.authenticate("github"));
@@ -38,7 +38,7 @@ router.get("/github", passport.authenticate("github"));
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    successRedirect: "/",
+    successRedirect: "http://localhost:3000",
     failureRedirect: "/auth/failed",
   })
 );

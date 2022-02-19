@@ -1,8 +1,4 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
-const { userSchema } = require("../db/user.schema");
-
-const UserModel = mongoose.model("users", userSchema);
+const { User } = require("../db/user.schema");
 
 async function get_one_user({ userEmail, userPassword }) {
   //   const result = await UserModel.findOne({
@@ -20,8 +16,22 @@ async function add_user(user) {
 async function get_all_users() {
   //   return await NewUser.find().exec();
 }
+
+async function getUser(uid) {
+  return await User.findOne({
+    userId: uid,
+  }).exec();
+}
+
+async function saveUser(user) {
+  const document = new User(user);
+  return await document.save();
+}
+
 module.exports = {
-  UserModel,
+  User,
+  getUser,
+  saveUser,
   add_user,
   get_one_user,
   get_all_users,

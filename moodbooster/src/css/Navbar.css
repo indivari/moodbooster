@@ -25,11 +25,7 @@
   padding: 5px 15px;
 }
 
-#plus-icon {
-  /* text-align: center;
-  justify-content: center; */
+.navbar-login-btn:hover,
+.navbar-logout-btn:hover {
+  background-color: deeppink;
 }
-
-/* .navbar-container {
-  text-align: center;
-} */

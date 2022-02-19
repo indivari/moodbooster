@@ -15,6 +15,6 @@ exports.users_all_get = async function (req, res) {
 
 //POST new user
 exports.create_user_post = async function (req, res) {
-  //   const result = await users.add_user(req.body);
-  //   res.send(result, 201);
+  const result = await users.add_user(req.body);
+  res.send(result, 201);
 };

@@ -1,6 +1,7 @@
 const passport = require("passport");
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GithubStrategy = require("passport-github2").Strategy;
+const { getUser, saveUser } = require("../model/users");
 
 module.exports = () => {
   const GITHUB_CLIENT_ID = "eb022fbb3775dc155024";
@@ -23,8 +24,20 @@ module.exports = () => {
         ],
       }, // passport callback function
       (token, refreshToken, profile, done) => {
-        console.log(profile);
-        return done(null, profile);
+        process.nextTick(async function () {
+          console.log(profile);
+          const userId = profile.id;
+          const user = await getUser(userId);
+          if (user !== null) return done(null, user);
+
+          const name = profile.displayName;
+          const profilePhoto = profile.photos[0].value;
+          const temp = { userId, name, profilePhoto, token };
+
+          const newUser = await saveUser(temp);
+
+          return done(null, newUser);
+        });
       }
     )
   );
@@ -46,8 +59,20 @@ module.exports = () => {
         ],
       }, // passport callback function
       (token, refreshToken, profile, done) => {
-        console.log(profile);
-        return done(null, profile);
+        process.nextTick(async function () {
+          const userId = profile.id;
+          const user = await getUser(userId);
+          if (user !== null) return done(null, user);
+
+          const name = profile.username;
+          const email = profile._json.email;
+          const profilePhoto = profile.photos[0].value;
+          const temp = { userId, name, email, profilePhoto, token };
+
+          const newUser = await saveUser(temp);
+
+          return done(null, newUser);
+        });
       }
     )
   );
