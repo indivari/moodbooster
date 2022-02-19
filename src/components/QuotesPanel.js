@@ -3,7 +3,7 @@ import "../css/QuotesPanel.css";
 import axios from "axios";
 import { UserContext } from "../UserContext";
 
-export const QuotesPanel = () => {
+export const QuotesPanel = ({ quotesList }) => {
   const [quote, setQuote] = useState("");
   const userContext = React.useContext(UserContext);
 
@@ -32,6 +32,17 @@ export const QuotesPanel = () => {
         <button class="boost-btn" onClick={handleClickBoost}>
           Boost
         </button>
+      </div>
+      <div className="quotes-list-div">
+        {quotesList !== undefined ? (
+          quotesList.map((val, id) => {
+            return (
+              <div className={{ backgroundColor: "pink" }}>{val.content}</div>
+            );
+          })
+        ) : (
+          <>loading</>
+        )}
       </div>
     </div>
   );

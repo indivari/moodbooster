@@ -1,0 +1,9 @@
+.featured-quotes {
+  background-color: rgb(250, 175, 211);
+  border-radius: 10px;
+  height: 400px;
+}
+
+.featured-quotes h3 {
+  color: white;
+}

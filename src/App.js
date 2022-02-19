@@ -14,7 +14,7 @@ function App() {
   const [user, setUser] = useState();
   const [profilePhoto, setProfilePhoto] = useState("");
 
-  const [quotesList, setQuotesList] = useState("");
+  const [quotesList, setQuotesList] = useState([]);
 
   const [userId, setUserId] = useState("");
 
@@ -49,7 +49,8 @@ function App() {
   useEffect(() => {
     console.log("loaded");
     axios.get("http://localhost:8080/quotes/list").then((res) => {
-      console.log("quotes response" + res);
+      console.log("quotes response", res.data);
+      setQuotesList(res.data);
     });
   }, []);
 
@@ -59,7 +60,7 @@ function App() {
 
   return (
     <div className="App">
-      <UserContext.Provider value={{ userId }}>
+      <UserContext.Provider value={{ userId, quotesList }}>
         {isLoginClicked ? (
           <LoginForm />
         ) : (
@@ -70,7 +71,7 @@ function App() {
 
             <div className="container-wrapper">
               <CategoriesPanel />
-              <QuotesPanel />
+              <QuotesPanel quotesList={quotesList} />
               <FeaturePanel />
             </div>
           </>

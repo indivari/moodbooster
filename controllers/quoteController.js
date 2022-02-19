@@ -1,8 +1,8 @@
 const quotes = require("../model/quotes");
 
 //GET all users
-exports.quotes_all_get = function (req, res) {
-  res.send(quotes.get_all_quotes());
+exports.quotes_all_get = async function (req, res) {
+  res.send(await quotes.get_all_quotes());
   //   res.send("User List");
 };
 
