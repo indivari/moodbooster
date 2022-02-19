@@ -2,12 +2,12 @@ import "./App.css";
 
 import { Navbar } from "./components/Nav";
 import { CategoriesPanel } from "./components/CategoriesPanel";
-import { QuotesPanel } from "./components/QuotesPanel";
 import { FeaturePanel } from "./components/FeaturePanel";
 import { useEffect, useState } from "react";
 import { LoginForm } from "./components/LoginForm";
 import axios from "axios";
 import { UserContext } from "./UserContext";
+import { MainContent } from "./components/MainContent";
 
 function App() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
@@ -62,7 +62,7 @@ function App() {
             <Navbar onLogin={handleLoginAction} />
             <div className="container-wrapper">
               <CategoriesPanel />
-              <QuotesPanel quotesList={quotesList} />
+              <MainContent />
               <FeaturePanel />
             </div>
           </>

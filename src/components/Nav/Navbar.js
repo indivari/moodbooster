@@ -12,12 +12,6 @@ const Nav = styled.div`
   align-items: center;
 `;
 
-const StyledLogo = styled(Logo)`
-  color: palevioletred;
-  font-weight: bold;
-  border: 1px solid black;
-`;
-
 const UserProfileWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -37,7 +31,7 @@ export const Navbar = ({ onLogin }) => {
 
   return (
     <Nav>
-      <StyledLogo />
+      <Logo />
 
       <UserProfileWrapper>
         {user ? (
