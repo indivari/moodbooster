@@ -1,5 +1,5 @@
 import React from "react";
-import { UserContext } from "../../UserContext";
+import { QuotesContext } from "../../QuotesContext";
 import { QuoteLineItem } from "./QuoteLineItem";
 
 import styled from "styled-components";
@@ -13,7 +13,7 @@ const Vertical = styled.div`
 `;
 
 export const QuotesPanel = () => {
-  const { quotesList } = React.useContext(UserContext);
+  const { quotesList } = React.useContext(QuotesContext);
 
   return (
     <Vertical>

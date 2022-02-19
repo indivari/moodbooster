@@ -4,8 +4,9 @@ import React, { useState } from "react";
 import { UserContext } from "../../UserContext";
 
 import styled from "styled-components";
-import { ImgProfilePhoto } from "../Nav/UserProfile";
+import { ImgProfilePhoto, UserProfile } from "../Nav/UserProfile";
 import { Button } from "./../Button";
+import { QuotesContext } from "../../QuotesContext";
 
 const Textarea = styled.textarea`
   box-sizing: border-box;
@@ -43,18 +44,31 @@ export const ProfilePhoto = () => {
 
 export const QuoteEntryForm = () => {
   const [quote, setQuote] = useState("");
-  const userContext = React.useContext(UserContext);
+  const { user } = React.useContext(UserContext);
+  const { refreshQuotes } = React.useContext(QuotesContext);
+  const ref = React.useRef(null);
 
   const handleOnChange = (e) => {
     setQuote(e.target.value);
     console.log(quote);
   };
 
+  const clearForm = () => {
+    if (ref.current) {
+      ref.current.value = "";
+    }
+  };
+
   const handleClickBoost = () => {
-    axios.post("http://localhost:8080/quotes/add", {
-      content: quote,
-      userId: userContext.userId,
-    });
+    axios
+      .post("http://localhost:8080/quotes/add", {
+        content: quote,
+        userId: user.userId,
+      })
+      .then(() => {
+        refreshQuotes();
+        clearForm();
+      });
   };
 
   return (
@@ -62,11 +76,12 @@ export const QuoteEntryForm = () => {
       <ProfilePhoto />
       <Vertical>
         <Textarea
+          ref={ref}
           onChange={handleOnChange}
           name=""
           id="quote-input"
           placeholder="start typing a moodbooster...."
-          autofocus
+          autoFocus
         ></Textarea>
         <ShrinkedButton onClick={handleClickBoost}>Boost</ShrinkedButton>
       </Vertical>

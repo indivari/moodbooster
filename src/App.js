@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { LoginForm } from "./components/LoginForm";
 import axios from "axios";
 import { UserContext } from "./UserContext";
+import { QuotesContext } from "./QuotesContext";
 import { MainContent } from "./components/MainContent";
 
 function App() {
@@ -52,21 +53,30 @@ function App() {
     setIsLoginClicked(loginStatus);
   };
 
+  const refreshQuotes = () => {
+    axios.get("http://localhost:8080/quotes/list").then((res) => {
+      console.log("quotes response", res.data);
+      setQuotesList(res.data);
+    });
+  };
+
   return (
     <div className="App">
-      <UserContext.Provider value={{ user, quotesList }}>
-        {isLoginClicked ? (
-          <LoginForm />
-        ) : (
-          <>
-            <Navbar onLogin={handleLoginAction} />
-            <div className="container-wrapper">
-              <CategoriesPanel />
-              <MainContent />
-              <FeaturePanel />
-            </div>
-          </>
-        )}
+      <UserContext.Provider value={{ user }}>
+        <QuotesContext.Provider value={{ quotesList, refreshQuotes }}>
+          {isLoginClicked ? (
+            <LoginForm />
+          ) : (
+            <>
+              <Navbar onLogin={handleLoginAction} />
+              <div className="container-wrapper">
+                <CategoriesPanel />
+                <MainContent />
+                <FeaturePanel />
+              </div>
+            </>
+          )}
+        </QuotesContext.Provider>
       </UserContext.Provider>
     </div>
   );
