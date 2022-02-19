@@ -8,6 +8,11 @@ const HorizontalRow = styled.div`
   flex-direction: row;
   gap: 10px;
   color: ${(props) => (props.color ? props.color : "black")};
+  background-color: #eff;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 12px;
+  box-sizing: border-box;
 `;
 
 const Vertical = styled.div`
@@ -38,7 +43,7 @@ export const VotingButtons = () => {
 export const QuoteLineItem = ({ quote }) => {
   return (
     <HorizontalRow>
-      <ProfilePhoto url={quote.profilePhoto} />
+      <ProfilePhoto url={quote.user.profilePhoto} />
       <Vertical>
         <QuoteContent>{quote.content}</QuoteContent>
         <VotingButtons />

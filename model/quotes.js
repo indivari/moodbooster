@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 const { quoteSchema } = require("../db/quote.schema");
 
 const Quote = mongoose.model("quotes", quoteSchema);
@@ -17,8 +16,23 @@ async function add_quote({ content, userId }) {
 }
 
 async function get_all_quotes() {
-  return await Quote.find().exec();
+  //  await Quote.find().exec();
+
+  const result = await Quote.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "userId",
+        as: "user",
+      },
+    },
+    { $unwind: "$user" },
+  ]);
+
+  return result;
 }
+
 module.exports = {
   Quote,
   add_quote,
