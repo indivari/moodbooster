@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { Navbar } from "./components/Navbar";
+import { Navbar } from "./components/Nav";
 import { CategoriesPanel } from "./components/CategoriesPanel";
 import { QuotesPanel } from "./components/QuotesPanel";
 import { FeaturePanel } from "./components/FeaturePanel";
@@ -12,11 +12,7 @@ import { UserContext } from "./UserContext";
 function App() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [user, setUser] = useState();
-  const [profilePhoto, setProfilePhoto] = useState("");
-
   const [quotesList, setQuotesList] = useState([]);
-
-  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const getUser = async () => {
@@ -32,9 +28,7 @@ function App() {
         .then((res) => {
           console.log(res.data);
           if (res.status === 200) {
-            setUser(res.data.user.name);
-            setUserId(res.data.user.userId);
-            setProfilePhoto(res.data.user.profilePhoto);
+            setUser(res.data.user);
           } else {
             throw new Error("Authentication has been failed");
           }
@@ -60,15 +54,12 @@ function App() {
 
   return (
     <div className="App">
-      <UserContext.Provider value={{ userId, quotesList }}>
+      <UserContext.Provider value={{ user, quotesList }}>
         {isLoginClicked ? (
           <LoginForm />
         ) : (
           <>
             <Navbar onLogin={handleLoginAction} />
-            <img id="profile-img" src={profilePhoto} alt="" />
-            <span>{user}</span>
-
             <div className="container-wrapper">
               <CategoriesPanel />
               <QuotesPanel quotesList={quotesList} />
