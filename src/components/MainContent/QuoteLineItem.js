@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 import { ImgProfilePhoto } from "../Nav/UserProfile";
-import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
+import { FiThumbsUp } from "react-icons/fi";
 import axios from "axios";
 import { UserContext } from "../../UserContext";
 import { QuotesContext } from "../../QuotesContext";
@@ -54,7 +54,11 @@ export const VotingButtons = ({ quote }) => {
 
   return (
     <HorizontalRow width="150px" color="#555">
-      <FiThumbsUp onClick={() => makeVote(true)} /> <span>{votes.length}</span>
+      <FiThumbsUp
+        style={{ cursor: "pointer" }}
+        onClick={() => makeVote(true)}
+      />{" "}
+      <span>{votes.length}</span>
     </HorizontalRow>
   );
 };
