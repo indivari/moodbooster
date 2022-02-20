@@ -10,6 +10,15 @@ import { UserContext } from "./UserContext";
 import { QuotesContext } from "./QuotesContext";
 import { MainContent } from "./components/MainContent";
 
+import styled from "styled-components";
+
+const Horizontal = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  background-color: mistyrose;
+`;
+
 function App() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [user, setUser] = useState();
@@ -42,7 +51,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("loaded");
     axios.get("http://localhost:8080/quotes/list").then((res) => {
       console.log("quotes response", res.data);
       setQuotesList(res.data);
@@ -69,11 +77,11 @@ function App() {
           ) : (
             <>
               <Navbar onLogin={handleLoginAction} />
-              <div className="container-wrapper">
+              <Horizontal>
                 <CategoriesPanel />
                 <MainContent />
                 <FeaturePanel />
-              </div>
+              </Horizontal>
             </>
           )}
         </QuotesContext.Provider>

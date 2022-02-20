@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 const QuotesWrapper = styled.div`
   display: flex;
+  flex-grow: 1.2;
   flex-direction: column;
   background-color: white;
   margin-top: 50px;

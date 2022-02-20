@@ -28,8 +28,33 @@ async function get_all_quotes() {
       },
     },
     { $unwind: "$user" },
+    {
+      $lookup: {
+        from: "quotevotes",
+        localField: "_id",
+        foreignField: "quoteId",
+        as: "votes",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        user: 1,
+        votes: 1,
+        numberOfVotes: {
+          $cond: {
+            if: { $isArray: "$votes" },
+            then: { $size: "$votes" },
+            else: "0",
+          },
+        },
+      },
+    },
+    { $sort: { numberOfVotes: -1 } },
   ]);
 
+  // TODO: change quoteId to ObjectId type
   return result;
 }
 

@@ -5,6 +5,7 @@ import { ImgProfilePhoto } from "../Nav/UserProfile";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
 import axios from "axios";
 import { UserContext } from "../../UserContext";
+import { QuotesContext } from "../../QuotesContext";
 
 const HorizontalRow = styled.div`
   width: ${(props) => (props.width ? props.width : "100%")};
@@ -35,23 +36,25 @@ export const ProfilePhoto = ({ url }) => {
   return <ImgProfilePhoto src={url} />;
 };
 
-export const VotingButtons = ({ quoteId }) => {
+export const VotingButtons = ({ quote }) => {
+  const { _id: quoteId, votes } = quote;
   const { user } = React.useContext(UserContext);
-  const { userId } = user;
+  const { refreshQuotes } = React.useContext(QuotesContext);
 
   const makeVote = (vote) => {
     axios
       .post(`http://localhost:8080/quotes/${quoteId}/vote`, {
-        userId,
+        userId: user.userId,
         vote,
       })
-      .then(() => {});
+      .then(() => {
+        refreshQuotes();
+      });
   };
 
   return (
-    <HorizontalRow width="50px" color="#555">
-      <FiThumbsUp onClick={() => makeVote(true)} />
-      <FiThumbsDown onClick={() => makeVote(false)} />
+    <HorizontalRow width="150px" color="#555">
+      <FiThumbsUp onClick={() => makeVote(true)} /> <span>{votes.length}</span>
     </HorizontalRow>
   );
 };
@@ -62,7 +65,7 @@ export const QuoteLineItem = ({ quote }) => {
       <ProfilePhoto url={quote.user.profilePhoto} />
       <Vertical>
         <QuoteContent>{quote.content}</QuoteContent>
-        <VotingButtons quoteId={quote._id} />
+        <VotingButtons quote={quote} />
       </Vertical>
     </HorizontalRow>
   );

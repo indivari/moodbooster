@@ -18,5 +18,5 @@ exports.voteForQuote = async function (req, res) {
   console.log("quoteId", quoteId);
   const { userId, vote } = req.body;
   const result = await quoteVotes.add_quote_vote({ quoteId, userId, vote });
-  return result;
+  res.send(result);
 };

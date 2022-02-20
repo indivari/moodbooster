@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const quoteVoteSchema = new Schema({
   userId: String,
-  quoteId: String,
+  quoteId: mongoose.Schema.Types.ObjectId,
   // 1 for a like, 0 for a dislike.
   vote: mongoose.Schema.Types.Boolean,
 });
