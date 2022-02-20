@@ -11,6 +11,7 @@ import { QuotesContext } from "./QuotesContext";
 import { MainContent } from "./components/MainContent";
 
 import styled from "styled-components";
+import { useCallback } from "react";
 
 const Horizontal = styled.div`
   margin-top: 20px;
@@ -68,11 +69,11 @@ function App() {
       setQuotesList(res.data);
     });
   };
-  const filterQuotesByTag = (tag) => {
+  const filterQuotesByTag = useCallback((tag) => {
     axios.get(`http://localhost:8080/quotes/list?tag=${tag}`).then((res) => {
       setQuotesList(res.data);
     });
-  };
+  }, []);
 
   return (
     <div className="App">

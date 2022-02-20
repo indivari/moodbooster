@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import axios from "axios";
 import styled from "styled-components";
@@ -12,8 +13,11 @@ const Container = styled.div`
 `;
 
 const Li = styled.li`
-  display: block;
-  margin: 8px 0;
+  margin: 4px 0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: ${(props) => (props.current ? "red" : "transparent")};
 `;
 
 const TagList = styled.ul`
@@ -24,23 +28,21 @@ const TagList = styled.ul`
   padding: 0;
 `;
 
-export const TagLineItem = ({ tag }) => {
-  const { filterQuotesByTag } = useContext(QuotesContext);
-  const handleTagClick = () => {
-    filterQuotesByTag(tag);
-  };
-
+export const TagLineItem = ({ tag, selected }) => {
   return (
-    <Li>
-      <a href="#" onClick={handleTagClick}>
+    <Li current={selected}>
+      <Link to={`/tags/${tag}`} style={{ textDecoration: "none" }}>
         <FiTag /> {tag}
-      </a>
+      </Link>
     </Li>
   );
 };
 
 export const CategoriesPanel = () => {
   const [tags, setTags] = useState([]);
+  const { filterQuotesByTag } = useContext(QuotesContext);
+  const { tagId: selectedTag } = useParams();
+
   useEffect(() => {
     axios.get("http://localhost:8080/tags/list").then((res) => {
       console.log("quotes response", res.data);
@@ -48,12 +50,16 @@ export const CategoriesPanel = () => {
     });
   }, []);
 
+  useEffect(() => {
+    filterQuotesByTag(selectedTag);
+  }, [selectedTag, filterQuotesByTag]);
+
   return (
     <Container>
       <SectionHeader>Tags</SectionHeader>
       <TagList>
         {tags.map((t) => (
-          <TagLineItem tag={t} />
+          <TagLineItem tag={t} selected={t === selectedTag} />
         ))}
       </TagList>
     </Container>
