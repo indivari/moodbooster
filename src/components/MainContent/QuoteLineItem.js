@@ -28,12 +28,22 @@ const Vertical = styled.div`
 
 const QuoteContent = styled.div`
   width: 100%;
+  color: #333;
+  line-height: 1.6em;
 `;
 
 export const ProfilePhoto = ({ url }) => {
   if (!url) return null;
   return <ImgProfilePhoto src={url} />;
 };
+
+const VotingRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  box-sizing: border-box;
+  color: #333;
+`;
 
 export const VotingButtons = ({ quote }) => {
   const { _id: quoteId, votes } = quote;
@@ -52,13 +62,13 @@ export const VotingButtons = ({ quote }) => {
   };
 
   return (
-    <HorizontalRow width="150px" color="#555">
+    <VotingRow>
       <FiThumbsUp
         style={{ cursor: "pointer" }}
         onClick={() => makeVote(true)}
       />{" "}
       <span>{votes.length}</span>
-    </HorizontalRow>
+    </VotingRow>
   );
 };
 
