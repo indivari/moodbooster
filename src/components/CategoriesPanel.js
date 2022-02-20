@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import axios from "axios";
 import styled from "styled-components";
 import { FiTag } from "react-icons/fi";
 import { SectionHeader } from "./SectionHeader";
+import { QuotesContext } from "../QuotesContext";
 
 const Container = styled.div`
   width: 180px;
@@ -24,9 +25,16 @@ const TagList = styled.ul`
 `;
 
 export const TagLineItem = ({ tag }) => {
+  const { filterQuotesByTag } = useContext(QuotesContext);
+  const handleTagClick = () => {
+    filterQuotesByTag(tag);
+  };
+
   return (
     <Li>
-      <FiTag /> {tag}
+      <a href="#" onClick={handleTagClick}>
+        <FiTag /> {tag}
+      </a>
     </Li>
   );
 };

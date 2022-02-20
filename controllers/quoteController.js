@@ -3,8 +3,14 @@ const quoteVotes = require("../model/quoteVotes");
 
 //GET all users
 exports.quotes_all_get = async function (req, res) {
-  res.send(await quotes.get_all_quotes());
-  //   res.send("User List");
+  const tag = req.query.tag;
+  console.log("tag is", tag);
+
+  if (!tag) {
+    res.send(await quotes.get_all_quotes());
+  } else {
+    res.send(await quotes.getQuotesHavingTag(tag));
+  }
 };
 
 //POST new quote

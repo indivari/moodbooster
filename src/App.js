@@ -68,11 +68,18 @@ function App() {
       setQuotesList(res.data);
     });
   };
+  const filterQuotesByTag = (tag) => {
+    axios.get(`http://localhost:8080/quotes/list?tag=${tag}`).then((res) => {
+      setQuotesList(res.data);
+    });
+  };
 
   return (
     <div className="App">
       <UserContext.Provider value={{ user }}>
-        <QuotesContext.Provider value={{ quotesList, refreshQuotes }}>
+        <QuotesContext.Provider
+          value={{ quotesList, refreshQuotes, filterQuotesByTag }}
+        >
           {isLoginClicked ? (
             <LoginForm />
           ) : (
