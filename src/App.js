@@ -12,6 +12,7 @@ import { MainContent } from "./components/MainContent";
 
 import styled from "styled-components";
 import { useCallback } from "react";
+import { useMemo } from "react";
 
 const Horizontal = styled.div`
   margin-top: 20px;
@@ -25,6 +26,7 @@ function App() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [user, setUser] = useState();
   const [quotesList, setQuotesList] = useState([]);
+  const isLoggedIn = useMemo(() => !!user, [user]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -69,15 +71,18 @@ function App() {
       setQuotesList(res.data);
     });
   };
+
   const filterQuotesByTag = useCallback((tag) => {
-    axios.get(`http://localhost:8080/quotes/list?tag=${tag}`).then((res) => {
-      setQuotesList(res.data);
-    });
+    axios
+      .get(`http://localhost:8080/quotes/list`, { params: { tag } })
+      .then((res) => {
+        setQuotesList(res.data);
+      });
   }, []);
 
   return (
     <div className="App">
-      <UserContext.Provider value={{ user }}>
+      <UserContext.Provider value={{ user, isLoggedIn }}>
         <QuotesContext.Provider
           value={{ quotesList, refreshQuotes, filterQuotesByTag }}
         >

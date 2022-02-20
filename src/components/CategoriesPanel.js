@@ -17,7 +17,9 @@ const Li = styled.li`
   padding: 5px 10px;
   border-radius: 5px;
   display: inline-block;
-  background-color: ${(props) => (props.current ? "red" : "transparent")};
+  background-color: ${(props) => (props.current ? "#daa" : "transparent")};
+  font-weight: ${(props) => (props.current ? "bold" : "normal")};
+  line-height: 25px;
 `;
 
 const TagList = styled.ul`
@@ -31,8 +33,12 @@ const TagList = styled.ul`
 export const TagLineItem = ({ tag, selected }) => {
   return (
     <Li current={selected}>
-      <Link to={`/tags/${tag}`} style={{ textDecoration: "none" }}>
-        <FiTag /> {tag}
+      <FiTag style={{}} />{" "}
+      <Link
+        to={`/tags/${tag}`}
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        {tag}
       </Link>
     </Li>
   );
@@ -59,7 +65,7 @@ export const CategoriesPanel = () => {
       <SectionHeader>Tags</SectionHeader>
       <TagList>
         {tags.map((t) => (
-          <TagLineItem tag={t} selected={t === selectedTag} />
+          <TagLineItem key={t} tag={t} selected={t === selectedTag} />
         ))}
       </TagList>
     </Container>

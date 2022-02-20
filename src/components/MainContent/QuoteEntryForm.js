@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { UserContext } from "../../UserContext";
 
 import styled from "styled-components";
-import { ImgProfilePhoto, UserProfile } from "../Nav/UserProfile";
+import { ImgProfilePhoto } from "../Nav/UserProfile";
 import { Button } from "./../Button";
 import { QuotesContext } from "../../QuotesContext";
 
@@ -16,12 +16,15 @@ const Textarea = styled.textarea`
   border: 0;
   border-radius: 10px;
   padding: 10px;
+  font-family: sans;
+  font-size: 16px;
 `;
 
 const HorizontalRow = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
+  margin: 20px 0;
 `;
 
 const Vertical = styled.div`
@@ -44,8 +47,15 @@ export const ProfilePhoto = () => {
 
 export const QuoteEntryForm = () => {
   const [quote, setQuote] = useState("");
-  const { user } = React.useContext(UserContext);
+  const { user, isLoggedIn } = React.useContext(UserContext);
   const { refreshQuotes } = React.useContext(QuotesContext);
+  const quotePlaceholder = React.useMemo(
+    () =>
+      isLoggedIn
+        ? "Start typing your mood booster quote here. Use #hashtags to tag them"
+        : "Please log in to share your quote",
+    [isLoggedIn]
+  );
   const ref = React.useRef(null);
 
   const handleOnChange = (e) => {
@@ -80,10 +90,12 @@ export const QuoteEntryForm = () => {
           onChange={handleOnChange}
           name=""
           id="quote-input"
-          placeholder="start typing a moodbooster...."
+          placeholder={quotePlaceholder}
           autoFocus
         ></Textarea>
-        <ShrinkedButton onClick={handleClickBoost}>Boost</ShrinkedButton>
+        {isLoggedIn ? (
+          <ShrinkedButton onClick={handleClickBoost}>Boost</ShrinkedButton>
+        ) : null}
       </Vertical>
     </HorizontalRow>
   );

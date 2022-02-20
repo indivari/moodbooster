@@ -45,12 +45,23 @@ const VotingRow = styled.div`
   color: #333;
 `;
 
+const VoteCount = styled.span`
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #ccd;
+  padding: 2px 8px;
+  border-radius: 10px;
+`;
+
 export const VotingButtons = ({ quote }) => {
   const { _id: quoteId, votes } = quote;
-  const { user } = React.useContext(UserContext);
+  const { user, isLoggedIn } = React.useContext(UserContext);
   const { refreshQuotes } = React.useContext(QuotesContext);
 
   const makeVote = (vote) => {
+    if (!isLoggedIn) return;
+
     axios
       .post(`http://localhost:8080/quotes/${quoteId}/vote`, {
         userId: user.userId,
@@ -64,10 +75,13 @@ export const VotingButtons = ({ quote }) => {
   return (
     <VotingRow>
       <FiThumbsUp
-        style={{ cursor: "pointer" }}
+        style={{
+          cursor: isLoggedIn ? "pointer" : "default",
+          color: isLoggedIn ? "#daa" : "grey",
+        }}
         onClick={() => makeVote(true)}
       />{" "}
-      <span>{votes.length}</span>
+      <VoteCount>{votes.length}</VoteCount>
     </VotingRow>
   );
 };
