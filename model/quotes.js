@@ -3,13 +3,12 @@ const { quoteSchema } = require("../db/quote.schema");
 
 const Quote = mongoose.model("quotes", quoteSchema);
 
-async function add_quote({ content, userId }) {
+async function add_quote({ content, userId, tags }) {
   const record = {
     content,
     userId,
     publishedDate: new Date(),
-    noOfUpVotes: 0,
-    noOfDownVotes: 0,
+    tags,
   };
   const document = new Quote(record);
   return await document.save();

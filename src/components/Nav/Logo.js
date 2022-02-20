@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import logo from "./logo.png";
 
-const StyledLogo = styled.div`
+const StyledLogo = styled.img`
+  height: 40px;
   display: inline-block;
   padding: 0.5rem 0;
   margin: 0.5rem 1rem;
@@ -8,5 +10,5 @@ const StyledLogo = styled.div`
 `;
 
 export const Logo = () => {
-  return <StyledLogo>Moodbooster</StyledLogo>;
+  return <StyledLogo src={logo} alt="Logo" />;
 };

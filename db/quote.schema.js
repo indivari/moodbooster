@@ -5,8 +5,7 @@ const quoteSchema = new Schema({
   content: String,
   userId: String,
   publishedDate: Date,
-  noOfUpVotes: Number,
-  noOfDownVotes: Number,
+  tags: [String],
 });
 
 const Quote = mongoose.model("quotes", quoteSchema);
