@@ -9,6 +9,10 @@ exports.quotes_all_get = async function (req, res) {
 
 //POST new quote
 exports.create_quote_post = async function (req, res) {
+  // const { content } = req.body;
+  // Find all the tags in content
+  // const tags = findTags(content);
+
   const result = await quotes.add_quote(req.body);
   res.send(result, 201);
 };

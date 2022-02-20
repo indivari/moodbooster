@@ -1,7 +1,15 @@
 import React from "react";
-import "../css/FeaturePanel.css";
 import { useEffect } from "react";
+
+import { SectionHeader } from "./SectionHeader";
+
 import axios from "axios";
+import styled from "styled-components";
+
+const Container = styled.div`
+  width: 220px;
+  padding: 20px;
+`;
 
 export const FeaturePanel = () => {
   useEffect(() => {
@@ -13,10 +21,8 @@ export const FeaturePanel = () => {
   }, []);
 
   return (
-    <>
-      <div className="feature-panel-div">
-        <h2>Top Boosterers</h2>
-      </div>
-    </>
+    <Container>
+      <SectionHeader>Top Boosterers</SectionHeader>
+    </Container>
   );
 };

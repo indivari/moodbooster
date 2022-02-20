@@ -9,6 +9,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const quotesRouter = require("./routes/quotes");
 const authRouter = require("./routes/auth");
+const tagRouter = require("./routes/tag");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/quotes", quotesRouter);
 app.use("/auth", authRouter);
+app.use("/tags", tagRouter);
 
 app.listen(PORT, () => {
   console.log(` server listening on port ${PORT}`);

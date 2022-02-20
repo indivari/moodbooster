@@ -6,10 +6,10 @@ import styled from "styled-components";
 
 const QuotesWrapper = styled.div`
   display: flex;
-  flex-grow: 1.2;
+  flex-grow: 0;
+  flex-basis: 1;
   flex-direction: column;
   background-color: white;
-  margin-top: 50px;
   border-radius: 10px;
   padding: 20px;
 `;

@@ -13,6 +13,7 @@ import { MainContent } from "./components/MainContent";
 import styled from "styled-components";
 
 const Horizontal = styled.div`
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   gap: 10px;

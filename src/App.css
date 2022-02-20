@@ -9,11 +9,6 @@ body {
   min-width: 100vw;
 }
 
-.categories-panel-div {
-  flex: 1;
-  margin-right: 0px;
-  text-align: center;
-}
 .quotes-panel-div {
   flex: 3;
   text-align: center;

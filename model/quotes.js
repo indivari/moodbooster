@@ -58,8 +58,19 @@ async function get_all_quotes() {
   return result;
 }
 
+async function getAllTags() {
+  return await Quote.distinct("tags");
+}
+
+async function getQuotesHavingTag(tag) {
+  const results = await Quote.find({ tags: { $all: [tag] } });
+  return results;
+}
+
 module.exports = {
   Quote,
   add_quote,
   get_all_quotes,
+  getAllTags,
+  getQuotesHavingTag,
 };

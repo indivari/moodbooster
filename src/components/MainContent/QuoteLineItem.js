@@ -16,7 +16,6 @@ const HorizontalRow = styled.div`
   background-color: #eff;
   border-radius: 5px;
   padding: 5px 8px;
-  font-size: 12px;
   box-sizing: border-box;
 `;
 
