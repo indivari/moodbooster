@@ -1,5 +1,4 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
 
 import { Navbar } from "./components/Nav";
 import { CategoriesPanel } from "./components/CategoriesPanel";
@@ -14,7 +13,6 @@ import { MainContent } from "./components/MainContent";
 import styled from "styled-components";
 import { useCallback } from "react";
 import { useMemo } from "react";
-import { Dashboard } from "./components/MainContent/Dashboard";
 
 const Horizontal = styled.div`
   margin-top: 20px;
@@ -24,7 +22,6 @@ const Horizontal = styled.div`
 `;
 
 function App() {
-  const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [user, setUser] = useState();
 
   const [quotesList, setQuotesList] = useState([]);
@@ -56,16 +53,12 @@ function App() {
     getUser();
   }, []);
 
-  useEffect(() => {
-    axios.get("http://localhost:8080/quotes/list").then((res) => {
-      console.log("quotes response", res.data);
-      setQuotesList(res.data);
-    });
-  }, []);
-
-  const handleLoginAction = (loginStatus) => {
-    setIsLoginClicked(loginStatus);
-  };
+  // useEffect(() => {
+  //   axios.get("http://localhost:8080/quotes/list").then((res) => {
+  //     console.log("quotes response", res.data);
+  //     setQuotesList(res.data);
+  //   });
+  // }, []);
 
   const refreshQuotes = useCallback((userId) => {
     if (userId) {
@@ -94,21 +87,12 @@ function App() {
         <QuotesContext.Provider
           value={{ quotesList, refreshQuotes, filterQuotesByTag }}
         >
-          {isLoginClicked ? (
-            <LoginForm />
-          ) : (
-            <>
-              <Navbar onLogin={handleLoginAction} />
-              <Horizontal>
-                <CategoriesPanel />
-                <Routes>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/" element={<MainContent />} />
-                </Routes>
-                <FeaturePanel />
-              </Horizontal>
-            </>
-          )}
+          <Navbar />
+          <Horizontal>
+            <CategoriesPanel />
+            <MainContent />
+            <FeaturePanel />
+          </Horizontal>
         </QuotesContext.Provider>
       </UserContext.Provider>
     </div>

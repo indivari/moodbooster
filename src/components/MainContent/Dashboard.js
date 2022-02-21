@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { QuotesPanel } from "./QuotesPanel";
-import { QuoteEntryForm } from "./QuoteEntryForm";
 import { UserContext } from "../../UserContext";
 import styled from "styled-components";
 import { QuotesContext } from "../../QuotesContext";
+import { EditableQuotesPanel } from "./Editable/EditableQuotesPanel";
 
 const QuotesWrapper = styled.div`
   display: flex;
@@ -26,8 +25,7 @@ export const Dashboard = () => {
 
   return (
     <QuotesWrapper>
-      <QuoteEntryForm />
-      <QuotesPanel />
+      <EditableQuotesPanel />
     </QuotesWrapper>
   );
 };

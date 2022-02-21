@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { QuotesContext } from "../../QuotesContext";
-import { QuoteCardItem } from "./QuoteCardItem";
+import React from "react";
+import { QuotesContext } from "../../../QuotesContext";
+import { EditableQuoteCardItem } from "./EditableQuoteCardItem";
 
 import styled from "styled-components";
 
@@ -15,19 +15,14 @@ const Vertical = styled.div`
   }
 `;
 
-export const QuotesPanel = () => {
+export const EditableQuotesPanel = () => {
   const { quotesList } = React.useContext(QuotesContext);
-  const { refreshQuotes } = React.useContext(QuotesContext);
-
-  useEffect(() => {
-    refreshQuotes();
-  }, [refreshQuotes]);
 
   return (
     <Vertical>
       {quotesList !== undefined ? (
         quotesList.map((val, id) => {
-          return <QuoteCardItem key={id} quote={val} />;
+          return <EditableQuoteCardItem key={id} quote={val} />;
         })
       ) : (
         <>loading</>
