@@ -46,14 +46,18 @@ exports.user_quotes_get = async function (req, res) {
 };
 
 exports.update_quote = async function (req, res) {
-  const quoteToUpdate = req.query.quoteId;
-  const quoteItem = req.body;
-
-  const result = await quotes.updateQuote(quoteToUpdate, quoteItem);
+  console.log("params", req.params);
+  console.log("body", req.body);
+  const quoteId = req.params.quoteId;
+  const { content, userId } = req.body;
+  // Find all the tags in content
+  const tags = findTags(content);
+  const result = await quotes.updateQuote({ userId, quoteId, content, tags });
   res.send(result);
 };
 
 exports.delete_quote = async function (req, res) {
-  const quoteToDelete = req.quer.quoteId;
-  const result = await quotes.deleteQuote({ quoteToDelete });
+  const quoteId = req.params.quoteId;
+  const result = await quotes.deleteQuote({ quoteId });
+  res.send(result);
 };

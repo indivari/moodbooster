@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import styled from "styled-components";
 import { ImgProfilePhoto } from "../../Nav/UserProfile";
-import { FiThumbsUp } from "react-icons/fi";
-import axios from "axios";
-import { UserContext } from "../../../UserContext";
 import { QuotesContext } from "../../../QuotesContext";
+import { AiOutlineEdit, AiOutlineSave, AiOutlineDelete } from "react-icons/ai";
 
 const CardContainer = styled.div`
   position: relative;
@@ -14,6 +12,18 @@ const CardContainer = styled.div`
   box-sizing: border-box;
   border-radius: 10px;
   box-shadow: 0px 2px 8px #ddd;
+`;
+
+const Textarea = styled.textarea`
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  background-color: #eee;
+  border: 0;
+  border-radius: 10px;
+  padding: 20px;
+  font-family: sans;
+  font-size: 16px;
 `;
 
 const QuoteContent = styled.div`
@@ -34,10 +44,19 @@ const QuoteContent = styled.div`
   }
 `;
 
-const ProfileContainer = styled.div`
+const ToolPanel = styled.div`
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 5px;
+  right: 5px;
+`;
+
+const IconButton = styled.button`
+  margin: 5px;
+  cursor: pointer;
+  border: 0;
+  &:hover {
+    background-color: lightgray;
+  }
 `;
 
 export const ProfilePhoto = ({ url }) => {
@@ -45,61 +64,50 @@ export const ProfilePhoto = ({ url }) => {
   return <ImgProfilePhoto src={url} />;
 };
 
-const VoteContainer = styled.span`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-`;
+export const EditableQuoteCardItem = ({ quote }) => {
+  const [isOnEdit, setIsOnEdit] = React.useState(false);
+  const [text, setText] = React.useState("");
+  const { saveQuote, deleteQuote } = React.useContext(QuotesContext);
 
-const VoteCount = styled.span`
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #ccd;
-  padding: 2px 8px;
-  border-radius: 10px;
-`;
-
-export const VotingButtons = ({ quote }) => {
-  const { _id: quoteId, votes } = quote;
-  const { user, isLoggedIn } = React.useContext(UserContext);
-  const { refreshQuotes } = React.useContext(QuotesContext);
-
-  const makeVote = (vote) => {
-    if (!isLoggedIn) return;
-
-    axios
-      .post(`http://localhost:8080/quotes/${quoteId}/vote`, {
-        userId: user.userId,
-        vote,
-      })
-      .then(() => {
-        refreshQuotes();
-      });
+  const saveQuoteClick = () => {
+    saveQuote(quote, text);
+    setIsOnEdit(false);
   };
 
-  return (
-    <VoteContainer>
-      <FiThumbsUp
-        style={{
-          cursor: isLoggedIn ? "pointer" : "default",
-          color: isLoggedIn ? "#daa" : "grey",
-        }}
-        onClick={() => makeVote(true)}
-      />{" "}
-      <VoteCount>{votes.length}</VoteCount>
-    </VoteContainer>
-  );
-};
+  const deleteQuoteClick = () => {
+    deleteQuote(quote);
+  };
 
-export const EditableQuoteCardItem = ({ quote }) => {
+  const handleOnChange = (e) => {
+    setText(e.target.value);
+    console.log(quote);
+  };
+
+  useEffect(() => setText(quote.content), [quote]);
+
   return (
     <CardContainer>
-      <QuoteContent>{quote.content}</QuoteContent>
-      <ProfileContainer>
-        <ProfilePhoto url={quote.user.profilePhoto} />
-      </ProfileContainer>
-      <VotingButtons quote={quote} />
+      {isOnEdit ? (
+        <Textarea onChange={handleOnChange}>{text}</Textarea>
+      ) : (
+        <QuoteContent>{quote.content}</QuoteContent>
+      )}
+      <ToolPanel>
+        {isOnEdit ? (
+          <IconButton onClick={() => saveQuoteClick()}>
+            <AiOutlineSave />
+          </IconButton>
+        ) : (
+          <>
+            <IconButton onClick={() => setIsOnEdit(true)}>
+              <AiOutlineEdit />
+            </IconButton>
+            <IconButton onClick={() => deleteQuoteClick()}>
+              <AiOutlineDelete />
+            </IconButton>
+          </>
+        )}
+      </ToolPanel>
     </CardContainer>
   );
 };

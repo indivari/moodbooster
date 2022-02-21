@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { QuotesContext } from "../../QuotesContext";
 import { QuoteCardItem } from "./QuoteCardItem";
 
@@ -17,11 +17,6 @@ const Vertical = styled.div`
 
 export const QuotesPanel = () => {
   const { quotesList } = React.useContext(QuotesContext);
-  const { refreshQuotes } = React.useContext(QuotesContext);
-
-  useEffect(() => {
-    refreshQuotes();
-  }, [refreshQuotes]);
 
   return (
     <Vertical>

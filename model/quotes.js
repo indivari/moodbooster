@@ -104,18 +104,17 @@ async function getAllTags() {
   return await Quote.distinct("tags");
 }
 
-async function deleteQuote(quoteId) {
+async function deleteQuote({ quoteId }) {
   return await Quote.deleteOne({ _id: quoteId });
 }
 
-async function updateQuote({ quoteId, userId, content, publishedDate, tags }) {
-  return await Quote.updateOne({
-    _id: quoteId,
-    content,
-    userId,
-    publishedDate: new Date(),
-    tags,
-  });
+async function updateQuote({ userId, quoteId, content, tags }) {
+  return await Quote.updateOne(
+    {
+      _id: quoteId,
+    },
+    { $set: { content, userId, publishedDate: new Date(), tags } }
+  );
 }
 
 async function getQuotesHavingTag(tag) {

@@ -4,7 +4,6 @@ import { Navbar } from "./components/Nav";
 import { CategoriesPanel } from "./components/CategoriesPanel";
 import { FeaturePanel } from "./components/FeaturePanel";
 import { useEffect, useState } from "react";
-import { LoginForm } from "./components/LoginForm";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import { QuotesContext } from "./QuotesContext";
@@ -53,13 +52,6 @@ function App() {
     getUser();
   }, []);
 
-  // useEffect(() => {
-  //   axios.get("http://localhost:8080/quotes/list").then((res) => {
-  //     console.log("quotes response", res.data);
-  //     setQuotesList(res.data);
-  //   });
-  // }, []);
-
   const refreshQuotes = useCallback((userId) => {
     if (userId) {
       axios.get(`http://localhost:8080/users/${userId}/quotes`).then((res) => {
@@ -81,11 +73,40 @@ function App() {
       });
   }, []);
 
+  const saveQuote = useCallback(
+    (quote, content) => {
+      axios
+        .put(`http://localhost:8080/quotes/${quote._id}`, {
+          content,
+          userId: user.userId,
+        })
+        .then((res) => {
+          refreshQuotes(user.userId);
+        });
+    },
+    [user, refreshQuotes]
+  );
+
+  const deleteQuote = useCallback(
+    (quote, content) => {
+      axios.delete(`http://localhost:8080/quotes/${quote._id}`).then((res) => {
+        refreshQuotes(user.userId);
+      });
+    },
+    [user, refreshQuotes]
+  );
+
   return (
     <div className="App">
       <UserContext.Provider value={{ user, isLoggedIn }}>
         <QuotesContext.Provider
-          value={{ quotesList, refreshQuotes, filterQuotesByTag }}
+          value={{
+            quotesList,
+            refreshQuotes,
+            filterQuotesByTag,
+            saveQuote,
+            deleteQuote,
+          }}
         >
           <Navbar />
           <Horizontal>
