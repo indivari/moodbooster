@@ -22,9 +22,5 @@ export const FeaturePanel = () => {
     });
   }, []);
 
-  return (
-    <Container>
-      <SectionHeader>Top Boosterers</SectionHeader>
-    </Container>
-  );
+  return <Container></Container>;
 };
