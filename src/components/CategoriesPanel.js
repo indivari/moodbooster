@@ -8,8 +8,10 @@ import { SectionHeader } from "./SectionHeader";
 import { QuotesContext } from "../QuotesContext";
 
 const Container = styled.div`
-  width: 180px;
+  width: 200px;
   padding: 20px;
+  flex-grow: 0;
+  flex-shrink: 0;
 `;
 
 const Li = styled.li`

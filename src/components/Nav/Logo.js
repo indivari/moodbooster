@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "./logo.png";
 
 const StyledLogo = styled.img`
-  height: 40px;
+  height: 60px;
   display: inline-block;
   padding: 0.5rem 0;
   margin: 0.5rem 1rem;

@@ -9,6 +9,8 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 220px;
   padding: 20px;
+  flex-grow: 0;
+  flex-shrink: 0;
 `;
 
 export const FeaturePanel = () => {

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { UserContext } from "../../UserContext";
 import { Button } from "../Button";
 import { UserProfile } from "./UserProfile";
+import { ProfileDropdown } from "./UserProfile";
 import { Logo } from "./Logo";
 
 const Nav = styled.div`
@@ -25,22 +26,17 @@ export const Navbar = ({ onLogin }) => {
     onLogin(!isLoginClicked);
   };
 
-  const handleLogout = () => {
-    window.open("http://localhost:8080/auth/logout", "_self");
-  };
-
   return (
     <Nav>
       <Logo />
 
       <UserProfileWrapper>
         {user ? (
-          <UserProfile user={user} />
+          // <UserProfile user={user} />
+          <ProfileDropdown user={user} />
         ) : (
           <Button onClick={handleLoginClick}>Login</Button>
         )}
-
-        <Button onClick={handleLogout}>Logout</Button>
       </UserProfileWrapper>
     </Nav>
   );

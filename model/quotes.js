@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { quotes_all_get } = require("../controllers/quoteController");
 const { quoteSchema } = require("../db/quote.schema");
 
 const Quote = mongoose.model("quotes", quoteSchema);
@@ -14,6 +15,9 @@ async function add_quote({ content, userId, tags }) {
   return await document.save();
 }
 
+async function get_user_quotes(userId) {
+  return await Quote.find({ userId: userId });
+}
 async function get_all_quotes() {
   const result = await Quote.aggregate([
     {
@@ -117,4 +121,5 @@ module.exports = {
   get_all_quotes,
   getAllTags,
   getQuotesHavingTag,
+  get_user_quotes,
 };

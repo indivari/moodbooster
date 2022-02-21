@@ -12,6 +12,7 @@ ReactDOM.render(
       <Routes>
         <Route path="*" element={<App />} />
         <Route path="/tags/:tagId" element={<App />} />
+        <Route path="/dashboard/:userId" element={<App />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

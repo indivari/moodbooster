@@ -37,3 +37,10 @@ exports.voteForQuote = async function (req, res) {
   const result = await quoteVotes.add_quote_vote({ quoteId, userId, vote });
   res.send(result);
 };
+
+exports.user_quotes_get = async function (req, res) {
+  console.log("userId: ", req.query);
+  const userId = req.query.userId;
+  const result = await quotes.get_user_quotes({ userId });
+  res.send(result);
+};

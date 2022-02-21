@@ -19,12 +19,14 @@ const Horizontal = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  background-color: mistyrose;
 `;
 
 function App() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [user, setUser] = useState();
+
+  const [userQuotes, setUserQuotes] = useState([]);
+
   const [quotesList, setQuotesList] = useState([]);
   const isLoggedIn = useMemo(() => !!user, [user]);
 
