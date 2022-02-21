@@ -39,8 +39,21 @@ exports.voteForQuote = async function (req, res) {
 };
 
 exports.user_quotes_get = async function (req, res) {
-  console.log("userId: ", req.query);
-  const userId = req.query.userId;
-  const result = await quotes.get_user_quotes({ userId });
+  console.log("userId: ", req.params.userId);
+  const userId = req.params.userId;
+  const result = await quotes.get_user_quotes(userId);
   res.send(result);
+};
+
+exports.update_quote = async function (req, res) {
+  const quoteToUpdate = req.query.quoteId;
+  const quoteItem = req.body;
+
+  const result = await quotes.updateQuote(quoteToUpdate, quoteItem);
+  res.send(result);
+};
+
+exports.delete_quote = async function (req, res) {
+  const quoteToDelete = req.quer.quoteId;
+  const result = await quotes.deleteQuote({ quoteToDelete });
 };

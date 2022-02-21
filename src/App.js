@@ -1,4 +1,5 @@
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
 
 import { Navbar } from "./components/Nav";
 import { CategoriesPanel } from "./components/CategoriesPanel";
@@ -13,6 +14,7 @@ import { MainContent } from "./components/MainContent";
 import styled from "styled-components";
 import { useCallback } from "react";
 import { useMemo } from "react";
+import { Dashboard } from "./components/MainContent/Dashboard";
 
 const Horizontal = styled.div`
   margin-top: 20px;
@@ -24,8 +26,6 @@ const Horizontal = styled.div`
 function App() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [user, setUser] = useState();
-
-  const [userQuotes, setUserQuotes] = useState([]);
 
   const [quotesList, setQuotesList] = useState([]);
   const isLoggedIn = useMemo(() => !!user, [user]);
@@ -67,12 +67,18 @@ function App() {
     setIsLoginClicked(loginStatus);
   };
 
-  const refreshQuotes = () => {
-    axios.get("http://localhost:8080/quotes/list").then((res) => {
-      console.log("quotes response", res.data);
-      setQuotesList(res.data);
-    });
-  };
+  const refreshQuotes = useCallback((userId) => {
+    if (userId) {
+      axios.get(`http://localhost:8080/users/${userId}/quotes`).then((res) => {
+        setQuotesList(res.data);
+      });
+    } else {
+      axios.get("http://localhost:8080/quotes/list").then((res) => {
+        console.log("quotes response", res.data);
+        setQuotesList(res.data);
+      });
+    }
+  }, []);
 
   const filterQuotesByTag = useCallback((tag) => {
     axios
@@ -95,7 +101,10 @@ function App() {
               <Navbar onLogin={handleLoginAction} />
               <Horizontal>
                 <CategoriesPanel />
-                <MainContent />
+                <Routes>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/" element={<MainContent />} />
+                </Routes>
                 <FeaturePanel />
               </Horizontal>
             </>

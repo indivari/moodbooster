@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { quotes_all_get } = require("../controllers/quoteController");
 const { quoteSchema } = require("../db/quote.schema");
 
 const Quote = mongoose.model("quotes", quoteSchema);
@@ -16,8 +15,50 @@ async function add_quote({ content, userId, tags }) {
 }
 
 async function get_user_quotes(userId) {
-  return await Quote.find({ userId: userId });
+  console.log("userquotes, userid", userId);
+  const result = await Quote.aggregate([
+    {
+      $match: {
+        userId: userId,
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "userId",
+        as: "user",
+      },
+    },
+    { $unwind: "$user" },
+    {
+      $lookup: {
+        from: "quotevotes",
+        localField: "_id",
+        foreignField: "quoteId",
+        as: "votes",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        user: 1,
+        votes: 1,
+        numberOfVotes: {
+          $cond: {
+            if: { $isArray: "$votes" },
+            then: { $size: "$votes" },
+            else: "0",
+          },
+        },
+      },
+    },
+    { $sort: { numberOfVotes: -1 } },
+  ]);
+  return result;
 }
+
 async function get_all_quotes() {
   const result = await Quote.aggregate([
     {
@@ -63,9 +104,21 @@ async function getAllTags() {
   return await Quote.distinct("tags");
 }
 
-async function getQuotesHavingTag(tag) {
-  // await Quote.find({ tags: { $all: [tag] } });
+async function deleteQuote(quoteId) {
+  return await Quote.deleteOne({ _id: quoteId });
+}
 
+async function updateQuote({ quoteId, userId, content, publishedDate, tags }) {
+  return await Quote.updateOne({
+    _id: quoteId,
+    content,
+    userId,
+    publishedDate: new Date(),
+    tags,
+  });
+}
+
+async function getQuotesHavingTag(tag) {
   const result = await Quote.aggregate([
     {
       $lookup: {
@@ -122,4 +175,6 @@ module.exports = {
   getAllTags,
   getQuotesHavingTag,
   get_user_quotes,
+  deleteQuote,
+  updateQuote,
 };

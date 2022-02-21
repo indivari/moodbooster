@@ -1,15 +1,18 @@
 import React from "react";
 import { QuotesContext } from "../../QuotesContext";
-import { QuoteLineItem } from "./QuoteLineItem";
+import { QuoteCardItem } from "./QuoteCardItem";
 
 import styled from "styled-components";
 
 const Vertical = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  @media only screen and (min-width: 1100px) {
+    & {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
 `;
 
 export const QuotesPanel = () => {
@@ -19,7 +22,7 @@ export const QuotesPanel = () => {
     <Vertical>
       {quotesList !== undefined ? (
         quotesList.map((val, id) => {
-          return <QuoteLineItem key={id} quote={val} />;
+          return <QuoteCardItem key={id} quote={val} />;
         })
       ) : (
         <>loading</>
