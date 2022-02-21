@@ -8,6 +8,11 @@ const Vertical = styled.div`
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr 1fr;
+  @media only screen and (max-width: 900px) {
+    & {
+      grid-template-columns: 1fr;
+    }
+  }
   @media only screen and (min-width: 1100px) {
     & {
       grid-template-columns: 1fr 1fr 1fr;
